@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.howsapp.screens.ChatScreen
 import com.example.howsapp.screens.LoginScreen
 import com.example.howsapp.screens.SignUpScreen
 import com.example.howsapp.screens.SplashScreen
@@ -33,6 +34,7 @@ object Routes {
     const val SPLASH = "splash"
     const val SIGN_UP = "signup"
     const val LOGIN = "login"
+    const val CHATS = "chats"
 }
 
 
@@ -51,11 +53,15 @@ fun AppNavigation(){
             LoginScreen(
                 onSignUpNavigate = {
                     navController.navigate(Routes.SIGN_UP)
-                }
+                },
+                navController = navController
             )
         }
         composable(Routes.SPLASH) {
             SplashScreen(navController)
+        }
+        composable(Routes.CHATS) {
+            ChatScreen()
         }
     }
 }

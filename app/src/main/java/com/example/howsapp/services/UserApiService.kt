@@ -12,6 +12,6 @@ interface UserApiService {
     @POST("/api/auth/register")
     suspend fun signup(@Body request: AuthRequest): Response<AuthResponse>
 
-    @POST("/login")
+    @POST("/api/auth/login")
     suspend fun login(@Body request: AuthRequest): Response<AuthResponse>
 }

@@ -36,5 +36,24 @@ class AuthViewModel: ViewModel() {
         }
     }
 
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            try {
+                _signUpResult.value = ApiResult.Loading
+                val response = ApiClient.userApiService.login(AuthRequest(email, password))
+                if (response.isSuccessful) {
+                    _signUpResult.value = ApiResult.Success(response.body()!!)
+                } else {
+                    _signUpResult.value =
+                        ApiResult.Error(response.body()?.message ?: "Login failed")
+                }
 
+
+            } catch (e: Exception) {
+                _signUpResult.value = ApiResult.Error(e.localizedMessage ?: "Unexpected error")
+            }
+        }
+
+
+    }
 }
