@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import com.example.howsapp.Routes
@@ -20,6 +21,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController){
+    val context = LocalContext.current
     val alpha = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
@@ -29,8 +31,16 @@ fun SplashScreen(navController: NavController){
 
         )
         delay(2000)
-        navController.navigate(Routes.SIGN_UP) {
-            popUpTo(Routes.SPLASH) { inclusive = true }
+        val isLoggedIn = DataStoreManager.isLoggedIn(context)
+        if(isLoggedIn) {
+            navController.navigate(Routes.CHATS){
+                popUpTo(Routes.SPLASH) { inclusive = true }
+            }
+
+        }else{
+            navController.navigate(Routes.LOGIN) {
+                popUpTo(Routes.SPLASH) { inclusive = true }
+            }
         }
     }
 

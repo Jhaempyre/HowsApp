@@ -56,6 +56,19 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    // Preferences DataStore (for key-value pairs)
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Optional: If you also want to use Proto DataStore (for typed objects)
+    implementation ("androidx.datastore:datastore:1.0.0")
+
+    // For coroutines support (needed for DataStore's suspend functions)
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
+    // For LifecycleScope (if you want to launch coroutines in ViewModel/Activity)
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

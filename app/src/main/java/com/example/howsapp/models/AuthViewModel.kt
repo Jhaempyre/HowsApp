@@ -1,5 +1,6 @@
 package com.example.howsapp.models
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -56,4 +57,17 @@ class AuthViewModel: ViewModel() {
 
 
     }
+
+    fun saveLoginStatus(context: Context, isLoggedIn: Boolean) {
+        viewModelScope.launch {
+            DataStoreManager.saveLoginStatus(context, isLoggedIn)
+        }
+    }
+
+    fun saveUserEmail(context: Context, email: String) {
+        viewModelScope.launch {
+            DataStoreManager.saveUserEmail(context, email)
+        }
+    }
+
 }
