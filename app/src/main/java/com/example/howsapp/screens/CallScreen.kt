@@ -6,9 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+
 @Composable
-fun ChatScreen() {
+fun CallScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(" Yaha Baat krenge apan bhiru ")
+        Text("Yaha phone laga dungaa tughe ")
     }
 }

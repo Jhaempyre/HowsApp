@@ -59,6 +59,9 @@ dependencies {
     // Preferences DataStore (for key-value pairs)
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
+    //material
+    implementation("androidx.compose.material:material:1.7.8") 
+
     // Optional: If you also want to use Proto DataStore (for typed objects)
     implementation ("androidx.datastore:datastore:1.0.0")
 

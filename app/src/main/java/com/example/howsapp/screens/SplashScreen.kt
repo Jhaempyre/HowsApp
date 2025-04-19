@@ -33,7 +33,7 @@ fun SplashScreen(navController: NavController){
         delay(2000)
         val isLoggedIn = DataStoreManager.isLoggedIn(context)
         if(isLoggedIn) {
-            navController.navigate(Routes.CHATS){
+            navController.navigate(Routes.MAIN){
                 popUpTo(Routes.SPLASH) { inclusive = true }
             }
 

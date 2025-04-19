@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.howsapp.screens.ChatScreen
 import com.example.howsapp.screens.LoginScreen
+import com.example.howsapp.screens.MainScreen
 import com.example.howsapp.screens.SignUpScreen
 import com.example.howsapp.screens.SplashScreen
 import com.example.howsapp.ui.theme.HowsAppTheme
@@ -35,10 +37,12 @@ object Routes {
     const val SIGN_UP = "signup"
     const val LOGIN = "login"
     const val CHATS = "chats"
+    const val MAIN = "main"
 }
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation(){
     val navController = rememberNavController()
@@ -63,6 +67,18 @@ fun AppNavigation(){
         composable(Routes.CHATS) {
             ChatScreen()
         }
+        composable(Routes.MAIN) {
+            MainScreen(
+                onLogout = {
+                    // Clear DataStore and navigate to login
+                },
+                onProfileUpdate = {
+                    // Navigate to profile screen (optional for now)
+                }
+
+            )
+        }
+
     }
 }
 

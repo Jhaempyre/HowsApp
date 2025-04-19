@@ -134,9 +134,9 @@ fun LoginCard(authViewModel: AuthViewModel = viewModel(),
                         authViewModel.saveLoginStatus(context, true)
                         authViewModel.saveUserEmail(context, email)
                         Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show()
-                        navController.navigate(Routes.CHATS)
+                        navController.navigate(Routes.MAIN)
                     Toast.makeText(context, "Signup Success", Toast.LENGTH_SHORT).show()
-                    navController.navigate(Routes.CHATS)
+                    navController.navigate(Routes.MAIN)
                 }
             }
 
