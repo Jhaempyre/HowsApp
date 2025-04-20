@@ -15,9 +15,9 @@ class AuthViewModel: ViewModel() {
     private val _signUpResult = mutableStateOf<ApiResult<AuthResponse>?>(null)
     val signUpResult: State<ApiResult<AuthResponse>?> = _signUpResult
 
-    fun resetSignUpState() {
-        _signUpResult.value = null
-    }
+//    fun resetSignUpState() {
+//        _signUpResult.value = null
+//    }
 
     fun signUp(email: String, password: String) {
         viewModelScope.launch {

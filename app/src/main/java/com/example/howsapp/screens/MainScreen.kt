@@ -26,14 +26,18 @@ import com.example.howsapp.models.BottomNavItem
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.howsapp.models.ProfileViewModel
 
 object InternalRoutes{
     const val CHATS = "chats"
     const val STATUS = "status"
     const val CALLS = "calls"
+    const val PROFILE_UPDATE ="profile_update"
 
 }
 
@@ -67,8 +71,10 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
                             text = { Text("Update Profile") },
                             onClick = {
                                 expanded = false
+                                navController.navigate(InternalRoutes.PROFILE_UPDATE)
                                 onProfileUpdate()
-                            }
+                            },
+                            modifier = Modifier.padding(8.dp)
                         )
                         DropdownMenuItem(
                             text = { Text("Logout") },
@@ -116,6 +122,15 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
             composable(InternalRoutes.STATUS) { StatusScreen() }
             composable(InternalRoutes.CHATS) { ChatScreen() }
             composable(InternalRoutes.CALLS) { CallScreen() }
+            composable(InternalRoutes.PROFILE_UPDATE) {
+                val profileViewModel: ProfileViewModel = viewModel()
+
+                ProfileUpdateScreen(
+                    profileViewModel = profileViewModel,
+                    onProfileUpdate = onProfileUpdate,
+                    navController = navController
+                )
+            }
         }
     }
 }
