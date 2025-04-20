@@ -25,19 +25,25 @@ import androidx.navigation.compose.rememberNavController
 import com.example.howsapp.models.BottomNavItem
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.howsapp.Routes
 import com.example.howsapp.models.ProfileViewModel
+import kotlinx.coroutines.launch
+
 
 object InternalRoutes{
     const val CHATS = "chats"
     const val STATUS = "status"
     const val CALLS = "calls"
     const val PROFILE_UPDATE ="profile_update"
+    const val LOGIN = "login"
 
 }
 
@@ -46,6 +52,8 @@ object InternalRoutes{
 @Composable
 fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
     val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     val bottomItems = listOf(
 
@@ -81,6 +89,7 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
                             onClick = {
                                 expanded = false
                                 onLogout()
+
                             }
                         )
                     }
@@ -131,9 +140,15 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
                     navController = navController
                 )
             }
+
+
         }
     }
 }
+
+
+
+
 
 
 

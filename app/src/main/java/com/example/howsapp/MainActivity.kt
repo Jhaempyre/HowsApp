@@ -16,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -29,7 +31,7 @@ import com.example.howsapp.screens.MainScreen
 import com.example.howsapp.screens.SignUpScreen
 import com.example.howsapp.screens.SplashScreen
 import com.example.howsapp.ui.theme.HowsAppTheme
-
+import kotlinx.coroutines.launch
 
 
 object Routes {
@@ -46,6 +48,8 @@ object Routes {
 @Composable
 fun AppNavigation(){
     val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     NavHost(navController = navController, startDestination = Routes.SPLASH) {
         composable(Routes.SIGN_UP) {
@@ -70,6 +74,13 @@ fun AppNavigation(){
         composable(Routes.MAIN) {
             MainScreen(
                 onLogout = {
+                    scope.launch{
+                        DataStoreManager.clearAll(context)
+                        navController.navigate(Routes.LOGIN) {
+                            popUpTo(0) // clears back stack
+                        }
+
+                    }
                     // Clear DataStore and navigate to login
                 },
                 onProfileUpdate = {

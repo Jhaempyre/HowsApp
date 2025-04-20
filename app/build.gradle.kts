@@ -73,6 +73,9 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
 
+    implementation( "com.google.code.gson:gson:2.10.1" ) // For JSON serialization
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

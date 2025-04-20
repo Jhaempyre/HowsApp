@@ -105,6 +105,7 @@ fun ProfileUpdateScreen(profileViewModel: ProfileViewModel = viewModel(),
                     scope.launch {
 
                         val email = profileViewModel.getStoredEmail(context)
+                        Log.d("ProfileUpdateemail", "Email: $email")
                         email?.let {
                             profileViewModel.updateProfile(name, phone, profileImage, email)
 
@@ -131,7 +132,7 @@ fun ProfileUpdateScreen(profileViewModel: ProfileViewModel = viewModel(),
         }
         is ApiResult.Success -> {
             LaunchedEffect(Unit) {
-
+                profileViewModel.saveUser(context, (profile as ApiResult.Success).data.user)
                 Toast.makeText(context, "Updated Successfully", Toast.LENGTH_SHORT).show()
                 navController.navigate(InternalRoutes.CHATS)
 

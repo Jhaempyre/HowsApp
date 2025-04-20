@@ -52,5 +52,14 @@ class ProfileViewModel : ViewModel() {
         return DataStoreManager.getUserEmail(context)
     }
 
+    suspend fun saveUser(context: Context, user: User) {
+        DataStoreManager.saveUser(context, user)
+
+    }
+
+    suspend fun getUser(context: Context): User? {
+        return DataStoreManager.getUser(context)
+
+    }
 
 }
