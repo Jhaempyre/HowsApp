@@ -98,27 +98,30 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
             )
         },
 
-        bottomBar= {
-            BottomNavigation(modifier = Modifier.navigationBarsPadding()) {
+        bottomBar = {
+            val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
-                val currentRoute =
-                    navController.currentBackStackEntryAsState().value?.destination?.route
+            // Show bottom bar only if on one of these root tabs
+            val showBottomBar = currentRoute == InternalRoutes.CHATS ||
+                    currentRoute == InternalRoutes.STATUS ||
+                    currentRoute == InternalRoutes.CALLS
 
-                bottomItems.forEach { item ->
-                    BottomNavigationItem(selected = currentRoute == item.route,
-                        onClick = {
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = { Icon(item.icon, contentDescription = item.label) },
-                        label = {
-                            Text(item.label)
-
-                        }
-                    )
+            if (showBottomBar) {
+                BottomNavigation(modifier = Modifier.navigationBarsPadding()) {
+                    bottomItems.forEach { item ->
+                        BottomNavigationItem(
+                            selected = currentRoute == item.route,
+                            onClick = {
+                                navController.navigate(item.route) {
+                                    popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = { Icon(item.icon, contentDescription = item.label) },
+                            label = { Text(item.label) }
+                        )
+                    }
                 }
             }
         }
@@ -143,6 +146,11 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
             }
             composable(InternalRoutes.CONTACTS) {
                 ContactsScreen(navController)
+            }
+            composable("${InternalRoutes.CHATS}/{name}/{phone}") { backStackEntry ->
+                val name = backStackEntry.arguments?.getString("name") ?: ""
+                val phone = backStackEntry.arguments?.getString("phone") ?: ""
+                ChatScreen(contactName = name, contactNumber = phone)
             }
 
 

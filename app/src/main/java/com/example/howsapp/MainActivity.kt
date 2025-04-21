@@ -105,11 +105,6 @@ fun AppNavigation() {
 
 
         }
-        composable("${Routes.CHATS}/{name}/{phone}") { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name") ?: ""
-            val phone = backStackEntry.arguments?.getString("phone") ?: ""
-            ChatScreen(name = name, phone = phone)
-        }
 
 
 
