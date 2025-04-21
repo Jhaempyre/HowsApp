@@ -44,6 +44,7 @@ object InternalRoutes{
     const val CALLS = "calls"
     const val PROFILE_UPDATE ="profile_update"
     const val LOGIN = "login"
+    const val CONTACTS = "contacts"
 
 }
 
@@ -129,7 +130,7 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(InternalRoutes.STATUS) { StatusScreen() }
-            composable(InternalRoutes.CHATS) { ChatScreen() }
+            composable(InternalRoutes.CHATS) { RecentChatsScreen(navController) }
             composable(InternalRoutes.CALLS) { CallScreen() }
             composable(InternalRoutes.PROFILE_UPDATE) {
                 val profileViewModel: ProfileViewModel = viewModel()
@@ -139,6 +140,9 @@ fun MainScreen(onLogout:()->Unit,onProfileUpdate:()->Unit) {
                     onProfileUpdate = onProfileUpdate,
                     navController = navController
                 )
+            }
+            composable(InternalRoutes.CONTACTS) {
+                ContactsScreen(navController)
             }
 
 

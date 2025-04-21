@@ -26,8 +26,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.howsapp.screens.ChatScreen
+import com.example.howsapp.screens.ContactsScreen
 import com.example.howsapp.screens.LoginScreen
 import com.example.howsapp.screens.MainScreen
+import com.example.howsapp.screens.PermissionScreen
+import com.example.howsapp.screens.RecentChatsScreen
+
 import com.example.howsapp.screens.SignUpScreen
 import com.example.howsapp.screens.SplashScreen
 import com.example.howsapp.ui.theme.HowsAppTheme
@@ -40,13 +44,19 @@ object Routes {
     const val LOGIN = "login"
     const val CHATS = "chats"
     const val MAIN = "main"
+    const val permission = "permission"
+
+    const val RECENT_CHATS = "recent_chats"
+
+
+
 }
 
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppNavigation(){
+fun AppNavigation() {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -69,12 +79,12 @@ fun AppNavigation(){
             SplashScreen(navController)
         }
         composable(Routes.CHATS) {
-            ChatScreen()
+            RecentChatsScreen(navController)
         }
         composable(Routes.MAIN) {
             MainScreen(
                 onLogout = {
-                    scope.launch{
+                    scope.launch {
                         DataStoreManager.clearAll(context)
                         navController.navigate(Routes.LOGIN) {
                             popUpTo(0) // clears back stack
@@ -87,8 +97,24 @@ fun AppNavigation(){
                     // Navigate to profile screen (optional for now)
                 }
 
+
             )
         }
+        composable(Routes.permission) {
+            PermissionScreen(navController)
+
+
+        }
+        composable("${Routes.CHATS}/{name}/{phone}") { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            val phone = backStackEntry.arguments?.getString("phone") ?: ""
+            ChatScreen(name = name, phone = phone)
+        }
+
+
+
+
+
 
     }
 }

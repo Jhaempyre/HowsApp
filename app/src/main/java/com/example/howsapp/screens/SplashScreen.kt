@@ -18,9 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import com.example.howsapp.Routes
 import kotlinx.coroutines.delay
-
 @Composable
-fun SplashScreen(navController: NavController){
+fun SplashScreen(navController: NavController) {
     val context = LocalContext.current
     val alpha = remember { Animatable(0f) }
 
@@ -28,34 +27,43 @@ fun SplashScreen(navController: NavController){
         alpha.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = 1000)
-
         )
         delay(2000)
-        val isLoggedIn = DataStoreManager.isLoggedIn(context)
-        if(isLoggedIn) {
-            navController.navigate(Routes.MAIN){
-                popUpTo(Routes.SPLASH) { inclusive = true }
-            }
 
-        }else{
-            navController.navigate(Routes.LOGIN) {
+        val isLoggedIn = DataStoreManager.isLoggedIn(context)
+        val permissionsAccepted = DataStoreManager.arePermissionsAccepted(context)
+
+        if (permissionsAccepted) {
+            // Permissions already granted, proceed to main flow
+            if (isLoggedIn) {
+                navController.navigate(Routes.MAIN) {
+                    popUpTo(Routes.SPLASH) { inclusive = true }
+                }
+            } else {
+                navController.navigate(Routes.LOGIN) {
+                    popUpTo(Routes.SPLASH) { inclusive = true }
+                }
+            }
+        } else {
+            // Navigate to permission screen first
+            navController.navigate(Routes.permission) {
                 popUpTo(Routes.SPLASH) { inclusive = true }
             }
         }
     }
 
-        Box(modifier = Modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
-            contentAlignment = Alignment.Center){
-            Text(
-                text = "HowsApp",
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    color = Color.White.copy(alpha = alpha.value),
-                    fontWeight = FontWeight.Bold
-                ))
-
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "HowsApp",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                color = Color.White.copy(alpha = alpha.value),
+                fontWeight = FontWeight.Bold
+            )
+        )
     }
-
-
 }
